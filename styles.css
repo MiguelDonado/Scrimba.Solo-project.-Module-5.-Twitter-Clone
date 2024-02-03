@@ -72,7 +72,7 @@ button{
     margin-top: 0;
     margin-bottom: 7px;
 }
-.tweet-icon{
+.tweet-details{
     margin-top: 20px;
     display: flex;
     gap: 80px;
@@ -91,4 +91,11 @@ i{
     margin: 0;
 }
 
+.liked-tweet{
+    color: red;
+}
+
+.retweeted-tweet{
+    color: aqua;
+}
 
