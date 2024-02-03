@@ -35,7 +35,7 @@ textarea{
     height: 70px;
     width: 100%;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 button{
@@ -53,3 +53,42 @@ button{
 .border-bottom{
     border-bottom: 1px solid rgb(190, 182, 182);
 }
+
+
+.tweet{
+    margin: 20px 0;
+    display: flex;
+    border-bottom: 1px solid rgb(190, 182, 182);
+    padding-bottom: 20px;
+}
+
+.tweet-inner{
+    margin: 0 10px;
+}
+
+.tweet-handle{
+    font-weight: 600;
+    color: rgb(83, 100, 113);
+    margin-top: 0;
+    margin-bottom: 7px;
+}
+.tweet-icon{
+    margin-top: 20px;
+    display: flex;
+    gap: 80px;
+}
+
+i{
+    cursor: pointer;
+    
+}
+
+.fa-solid{
+    color: #999;
+}
+
+.tweet-area{
+    margin: 0;
+}
+
+
