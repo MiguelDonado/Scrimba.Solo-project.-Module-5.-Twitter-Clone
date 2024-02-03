@@ -1,4 +1,5 @@
 import { tweetsData } from './data.js'
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 
 const tweetsContainerEl = document.getElementById('tweets-container')
 
@@ -10,7 +11,7 @@ document.addEventListener("click",function(e){
     }else if(e.target.dataset.retweet){
         handleRetweetClick(e.target.dataset.retweet)
     }else if(e.target.id === "tweet-btn"){
-        handleTweetBtn(e.target.id)
+        handleTweetBtn()
     }
 })
 
@@ -45,8 +46,22 @@ function handleRetweetClick(tweetId){
     render()
 }
 
-function handleTweetBtn(tweetId){
-
+function handleTweetBtn(){
+    const textAreaEl = document.getElementById('textarea')
+    const newTweet = {
+        handle:"Maestro D'Alessandro",
+        profilePic:"images/profile.jpg",
+        likes:0,
+        retweets:0,
+        tweetText:textAreaEl.value,
+        replies:[],
+        isLiked:false,
+        isRetweeted:false,
+        uuid:`${uuidv4()}`,
+    }
+    tweetsData.unshift(newTweet)
+    textAreaEl.value='' 
+    render()
 }
 
 
