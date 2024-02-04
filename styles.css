@@ -62,11 +62,11 @@ button{
     padding-bottom: 20px;
 }
 
-.tweet-inner{
+.tweet-inner, .reply-inner{
     margin: 0 10px;
 }
 
-.tweet-handle{
+.tweet-handle, .reply-handle{
     font-weight: 600;
     color: rgb(83, 100, 113);
     margin-top: 0;
@@ -87,7 +87,7 @@ i{
     color: #999;
 }
 
-.tweet-area{
+.tweet-area, .reply-area{
     margin: 0;
 }
 
@@ -102,3 +102,16 @@ i{
 .tweet-btn:active{
     transform: scale(0.95);
 }
+
+.hidden{
+    display: none;
+}
+.reply{
+    display: flex;
+    width: 300px;
+    margin: 0 auto;    
+    border-bottom: 1px solid #999;
+    padding: 20px 0;
+}
+
+
