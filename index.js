@@ -19,6 +19,21 @@ document.addEventListener("click",function(e){
     }
 })
 
+document.addEventListener("dblclick",function(e){
+    if (e.target.dataset.reply){
+        handleWriteReplyClick(e.target.dataset.reply)
+    }
+})
+
+
+function saveToLocalStorage(){
+    localStorage.setItem("tweetsData",JSON.stringify(tweetsData))
+}
+
+function handleCloseBtn(){
+    document.getElementById("modal-container").style.display = "none"
+}
+
 function handleAddReply(tweetId){
     const tweetTextEl = document.getElementById("modal-textarea")
     let targetTweet = tweetsData.filter(function(tweet){
@@ -30,20 +45,65 @@ function handleAddReply(tweetId){
         tweetText: `${tweetTextEl.value}`
     })}
     document.getElementById("modal-container").style.display = "none"
+    saveToLocalStorage()
     render()
     tweetTextEl.value=""
     }    
 
-
-function handleCloseBtn(){
-    document.getElementById("modal-container").style.display = "none"
+function handleLikeClick(tweetId){
+const targetTweet = tweetsData.filter(function(tweetData){
+    return tweetData.uuid === tweetId
+}
+)[0]
+if (targetTweet.isLiked){
+    targetTweet.likes--
+}else{
+    targetTweet.likes++
+}
+targetTweet.isLiked = !targetTweet.isLiked
+saveToLocalStorage()
+render()
 }
 
-document.addEventListener("dblclick",function(e){
-    if (e.target.dataset.reply){
-        handleWriteReplyClick(e.target.dataset.reply)
+
+function handleReplyClick(tweetId){
+    document.getElementById(`reply-${tweetId}`).classList.toggle('hidden')
+}
+
+function handleRetweetClick(tweetId){
+    const targetTweet = tweetsData.filter(function(tweetData){
+        return tweetData.uuid === tweetId
+    })[0]
+    if (targetTweet.isRetweeted){
+        targetTweet.retweets--
+    }else{
+        targetTweet.retweets++
     }
-})
+    targetTweet.isRetweeted = !targetTweet.isRetweeted
+    saveToLocalStorage()
+    render()
+}
+
+function handleTweetBtn(){
+    const textAreaEl = document.getElementById('textarea')
+    if (textAreaEl.value){
+        const newTweet = {
+            handle:"Maestro D'Alessandro",
+            profilePic:"images/profile.jpg",
+            likes:0,
+            retweets:0,
+            tweetText:textAreaEl.value,
+            replies:[],
+            isLiked:false,
+            isRetweeted:false,
+            uuid:`${uuidv4()}`,
+        }
+        tweetsData.unshift(newTweet)
+        textAreaEl.value='' 
+        saveToLocalStorage()
+        render()
+    }
+}
 
 function handleWriteReplyClick(tweetId){
     const targetTweet = tweetsData.filter(function(tweet){
@@ -81,61 +141,18 @@ function populateModalWindow(tweet){
     document.getElementById("replied-tweet").innerHTML = repliedTweetHtml
 }
 
-function handleLikeClick(tweetId){
-    const targetTweet = tweetsData.filter(function(tweetData){
-        return tweetData.uuid === tweetId
-    }
-    )[0]
-    if (targetTweet.isLiked){
-        targetTweet.likes--
-    }else{
-        targetTweet.likes++
-    }
-    targetTweet.isLiked = !targetTweet.isLiked
-    render()
-}
-
-function handleReplyClick(tweetId){
-    document.getElementById(`reply-${tweetId}`).classList.toggle('hidden')
-}
-
-function handleRetweetClick(tweetId){
-    const targetTweet = tweetsData.filter(function(tweetData){
-        return tweetData.uuid === tweetId
-    })[0]
-    if (targetTweet.isRetweeted){
-        targetTweet.retweets--
-    }else{
-        targetTweet.retweets++
-    }
-    targetTweet.isRetweeted = !targetTweet.isRetweeted
-    render()
-}
-
-function handleTweetBtn(){
-    const textAreaEl = document.getElementById('textarea')
-    if (textAreaEl.value){
-        const newTweet = {
-            handle:"Maestro D'Alessandro",
-            profilePic:"images/profile.jpg",
-            likes:0,
-            retweets:0,
-            tweetText:textAreaEl.value,
-            replies:[],
-            isLiked:false,
-            isRetweeted:false,
-            uuid:`${uuidv4()}`,
-        }
-        tweetsData.unshift(newTweet)
-        textAreaEl.value='' 
-        render()
-}
-}
-
 
 function render(){
+    let tweetsDataFromLocalStorage = JSON.parse(localStorage.getItem("tweetsData"))
+    let tweetToRender = ""
+    if (tweetsDataFromLocalStorage){
+        tweetToRender = tweetsDataFromLocalStorage
+    }else{
+        tweetToRender = tweetsData
+    }    
     let tweetsHtml = ``
-    tweetsData.forEach(function(tweet){
+
+    tweetToRender.forEach(function(tweet){
         let likedTweet = ``
         let retweetTweet = ``
         if (tweet.isLiked){
