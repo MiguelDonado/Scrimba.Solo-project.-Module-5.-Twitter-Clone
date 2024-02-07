@@ -12,8 +12,74 @@ document.addEventListener("click",function(e){
         handleRetweetClick(e.target.dataset.retweet)
     }else if(e.target.id === "tweet-btn"){
         handleTweetBtn()
+    }else if(e.target.id === "arrow-left"){
+        handleCloseBtn()
+    }else if(e.target.dataset.replybtn){
+        handleAddReply(e.target.dataset.replybtn)
     }
 })
+
+function handleAddReply(tweetId){
+    const tweetTextEl = document.getElementById("modal-textarea")
+    let targetTweet = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId})[0]
+    if (tweetTextEl){
+        targetTweet.replies.push({
+        handle: `@Maestro D'Alessandro`,
+        profilePic: `images/profile.jpg`,
+        tweetText: `${tweetTextEl.value}`
+    })}
+    document.getElementById("modal-container").style.display = "none"
+    render()
+    tweetTextEl.value=""
+    }    
+
+
+function handleCloseBtn(){
+    document.getElementById("modal-container").style.display = "none"
+}
+
+document.addEventListener("dblclick",function(e){
+    if (e.target.dataset.reply){
+        handleWriteReplyClick(e.target.dataset.reply)
+    }
+})
+
+function handleWriteReplyClick(tweetId){
+    const targetTweet = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId
+    })[0]
+    openModalWindowToReply(targetTweet)
+    
+}
+
+function openModalWindowToReply(tweet){
+    document.getElementById("modal-container").style.display = "flex"
+    populateModalWindow(tweet)
+}
+
+function populateModalWindow(tweet){
+    let repliedTweetHtml = `
+        <div class="modal-tweet-btn-container">
+            <i class="fa-solid fa-arrow-left" id="arrow-left"></i>
+            <button class="modal-tweet-btn" data-replybtn = "${tweet.uuid}">Reply</button>
+        </div>
+        <div id="${tweet.uuid}">
+            <div class="tweet modal-border-bottom">
+                <div class="tweet-profile-img">
+                    <img src="${tweet.profilePic}" class="profile">
+                    <div class="border"></div>
+                </div>
+                <div class="tweet-inner">
+                    <p class="tweet-handle">${tweet.handle}</p>
+                    <p class="tweet-area">${tweet.tweetText}</p>
+                    <p class="tweet-destinatary">Replying to ${tweet.handle}<p>
+                </div>
+            </div>
+        </div>
+    `
+    document.getElementById("replied-tweet").innerHTML = repliedTweetHtml
+}
 
 function handleLikeClick(tweetId){
     const targetTweet = tweetsData.filter(function(tweetData){

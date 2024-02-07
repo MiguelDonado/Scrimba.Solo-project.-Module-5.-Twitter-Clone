@@ -23,7 +23,7 @@ body{
     height: 50px;
 }
 
-.write-area{
+.write-area, .modal-write-area{
     margin: 25px 0px;
     display: flex;
 }
@@ -99,7 +99,7 @@ i{
     color: aqua;
 }
 
-.tweet-btn:active{
+.tweet-btn:active, .modal-tweet-btn:active{
     transform: scale(0.95);
 }
 
@@ -114,4 +114,57 @@ i{
     padding: 20px 0;
 }
 
+/* MODAL */
 
+.modal-container{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 15px;
+    bottom:0;
+    width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+}
+
+.modal-close-btn-container{
+    display:flex;
+}
+.modal-close-btn{
+    margin: 0 0 auto auto;
+    border:none;
+    font-size: 20px;
+    font-weight: 900;
+    cursor:pointer;
+    color: rgba(29,155,240,1.00);
+}
+
+.modal-tweet-btn{
+    width: 70px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: none;
+    background-color: rgba(29,155,240,1.00);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.modal-tweet-btn-container{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal-border-bottom{
+    border-bottom: none;
+    margin: 10px 0 0 0;
+}
+.border{
+    border-left: 1px solid #999;
+    height: 190px;
+    margin: 30px 0 0 25px;
+}
